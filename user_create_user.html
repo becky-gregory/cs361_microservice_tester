@@ -11,12 +11,18 @@
   <p>
     <label for="user_id">User ID</label><br />
     <input type="text" id="user_id" />
+  </p>
+  <p>
     <label for="email">Email</label><br />
     <input type="text" id="email" />
+  </p>
+  <p>
     <label for="name">Name</label><br />
     <input type="text" id="name" />
-    <label for="is_public">Is public</label><br />
+  </p>
+  <p>
     <input type="checkbox" id="is_public" />
+    <label for="is_public">Is public</label>
   </p>
   <p><button type="button" id="submit">Send request</button></p>
 
@@ -28,6 +34,9 @@
   <script>
     document.getElementById("submit").onclick = function() {
       var user_id = document.getElementById("user_id").value.trim();
+      var email = document.getElementById("email").value.trim();
+      var name = document.getElementById("name").value.trim();
+      var is_public = document.getElementById("is_public").checked;
       var resultDiv = document.getElementById("result");
       var resultStatus = document.getElementById("resultStatus");
       var resultBody = document.getElementById("resultBody");
@@ -43,7 +52,7 @@
           baseUrl: "http://127.0.0.1:8002",
           method: "POST",
           path: "/users",
-          body: { user_id: user_id }
+          body: { user_id: user_id, email: email, name: name, is_public: is_public }
         })
       })
       .then(function(response) { return response.json(); })
