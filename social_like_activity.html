@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Like activity</title>
+</head>
+<body>
+  <p><a href="index.html">Back to Microservice Tester</a></p>
+  <h2>Social – POST Like activity</h2>
+
+  <p>
+    <label for="activity_id">Activity ID</label><br />
+    <input type="number" id="activity_id" />
+  </p>
+  <p>
+    <label for="user_id">User ID</label><br />
+    <input type="text" id="user_id" />
+  </p>
+  <p><button type="button" id="submit">Send request</button></p>
+
+  <div id="result" style="display: none;">
+    <p id="resultStatus"></p>
+    <pre id="resultBody"></pre>
+  </div>
+
+  <script>
+    document.getElementById("submit").onclick = function() {
+      var activity_id = document.getElementById("activity_id").value.trim();
+      var user_id = document.getElementById("user_id").value.trim();
+      var resultDiv = document.getElementById("result");
+      var resultStatus = document.getElementById("resultStatus");
+      var resultBody = document.getElementById("resultBody");
+
+      resultDiv.style.display = "block";
+      resultStatus.textContent = "Sending...";
+      resultBody.textContent = "";
+
+      var body = { user_id: user_id };
+      if (activity_id !== "") body.activity_id = parseInt(activity_id, 10);
+
+      fetch("/api/call", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          baseUrl: "http://127.0.0.1:8000",
+          method: "POST",
+          path: "/activity_likes",
+          body: body
+        })
+      })
+      .then(function(response) { return response.json(); })
+      .then(function(data) {
+        if (data.error) {
+          resultStatus.textContent = "Request failed";
+          resultBody.textContent = data.error;
+        } else {
+          resultStatus.textContent = "HTTP " + data.status;
+          try {
+            resultBody.textContent = JSON.stringify(JSON.parse(data.body), null, 2);
+          } catch (e) {
+            resultBody.textContent = data.body;
+          }
+        }
+      })
+      .catch(function(err) {
+        resultStatus.textContent = "Request failed";
+        resultBody.textContent = err.message;
+      });
+    };
+  </script>
+</body>
+</html>

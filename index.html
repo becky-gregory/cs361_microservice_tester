@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Microservice Tester</title>
+</head>
+<body>
+  <h1>Microservice Tester</h1>
+  <p>Click an endpoint to test it.</p>
+
+  <h2>Social (port 8000)</h2>
+  <ul>
+    <li><a href="social_create_activity.html">POST Create activity</a></li>
+    <li><a href="social_list_activities.html">GET List user activities</a></li>
+    <li><a href="social_get_feed.html">GET User feed</a></li>
+    <li><a href="social_create_follow.html">POST Follow</a></li>
+    <li><a href="social_delete_follow.html">DELETE Unfollow</a></li>
+    <li><a href="social_list_follows.html">GET List follows</a></li>
+    <li><a href="social_list_following.html">GET List following</a></li>
+    <li><a href="social_list_followers.html">GET List followers</a></li>
+    <li><a href="social_like_activity.html">POST Like activity</a></li>
+    <li><a href="social_list_activity_likes.html">GET List activity likes</a></li>
+    <li><a href="social_unlike_activity.html">DELETE Unlike activity</a></li>
+  </ul>
+
+  <h2>Notification (port 8001)</h2>
+  <ul>
+    <li><a href="notification_create_notification.html">POST Create notification</a></li>
+    <li><a href="notification_list_notifications.html">GET List user notifications</a></li>
+    <li><a href="notification_update_notification.html">PATCH Update notification (read/unread)</a></li>
+    <li><a href="notification_get_unread_count.html">GET unread count</a></li>
+  </ul>
+
+  <h2>User (port 8002)</h2>
+  <ul>
+    <li><a href="user_create_user.html">POST Create user</a></li>
+    <li><a href="user_list_users.html">GET List users</a></li>
+    <li><a href="user_get_user.html">GET user</a></li>
+    <li><a href="user_update_user.html">PATCH Update user</a></li>
+  </ul>
+</body>
+</html>

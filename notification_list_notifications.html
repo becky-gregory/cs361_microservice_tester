@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>List user notifications</title>
+</head>
+<body>
+  <p><a href="index.html">Back to Microservice Tester</a></p>
+  <h2>Notification – GET List user notifications</h2>
+
+  <p>
+    <label for="user_id">User ID</label><br />
+    <input type="text" id="user_id" />
+  </p>
+  <p><button type="button" id="submit">Send request</button></p>
+
+  <div id="result" style="display: none;">
+    <p id="resultStatus"></p>
+    <pre id="resultBody"></pre>
+  </div>
+
+  <script>
+    document.getElementById("submit").onclick = function() {
+      var user_id = document.getElementById("user_id").value.trim();
+      var path = "/users/" + encodeURIComponent(user_id) + "/notifications";
+      var resultDiv = document.getElementById("result");
+      var resultStatus = document.getElementById("resultStatus");
+      var resultBody = document.getElementById("resultBody");
+
+      resultDiv.style.display = "block";
+      resultStatus.textContent = "Sending...";
+      resultBody.textContent = "";
+
+      fetch("/api/call", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          baseUrl: "http://127.0.0.1:8001",
+          method: "GET",
+          path: path
+        })
+      })
+      .then(function(response) { return response.json(); })
+      .then(function(data) {
+        if (data.error) {
+          resultStatus.textContent = "Request failed";
+          resultBody.textContent = data.error;
+        } else {
+          resultStatus.textContent = "HTTP " + data.status;
+          try {
+            resultBody.textContent = JSON.stringify(JSON.parse(data.body), null, 2);
+          } catch (e) {
+            resultBody.textContent = data.body;
+          }
+        }
+      })
+      .catch(function(err) {
+        resultStatus.textContent = "Request failed";
+        resultBody.textContent = err.message;
+      });
+    };
+  </script>
+</body>
+</html>
